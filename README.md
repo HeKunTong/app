@@ -167,6 +167,11 @@
 ```
 <script>
 
+     let admin;
+     let view;
+     let form;
+     let table;	
+
     layui.use('app', function() {
         let $ = layui.$;
         $("#js-load-title").html('用户管理');//标题
@@ -223,10 +228,6 @@
             }).clear(),
             toolbar.setWidth(260).setToolbar('#toolBar').clear()
         ];
-        let admin;
-        let view;
-        let form;
-        let table;
 
         let formFields = [
             formField.text().setName('userAccount').setTitle('帐号').setDisabled(true).exec(),
