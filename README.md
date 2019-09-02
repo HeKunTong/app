@@ -311,7 +311,7 @@
 
             controller.setFormFields(formFields);			// 绑定表单元素
 		
-			// controller.add('用户', function (params) {		// 以layer.open方式弹窗，绑定添加事件以及执行添加操作
+	    // controller.add('用户', function (params) {		// 以layer.open方式弹窗，绑定添加事件以及执行添加操作
             //
             //     console.log(params);
             //     return false;
@@ -333,7 +333,7 @@
                     popup('调整金额', 'users/money', function(index) {		// 弹窗
                    
                         form.val('form-money', data);					// 赋值
-						form.render();									// 渲染
+			form.render();									// 渲染
 						
                         form.on('submit(save)', function(data) {		// 提交按钮事件
                             var field = data.field;
@@ -354,16 +354,16 @@
             }, {
                 event: 'edit',										// 绑定info事件
                 callBack: function (data) {
-					// controller.update('用户', data, function (params) {		// 以layer.open方式弹窗，执行更新操作 	
-					//
-					//     console.log(params);
-					//
-					//     return false;
-					// });
+		    // controller.update('用户', data, function (params) {		// 以layer.open方式弹窗，执行更新操作 	
+		    //
+		    //     console.log(params);
+	            //
+		    //     return false;
+		    // });
 				
                     controller.updateByPopup('用户', data, function (params) {		// 以admn.popup方式弹窗，执行更新操作 	
                         
-						console.log(params);
+			console.log(params);
                         
                         return fasle;
                     });
