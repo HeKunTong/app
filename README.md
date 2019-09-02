@@ -160,6 +160,12 @@
 	9.getWidth 获取弹窗的宽度
 	
 	10.getHeight 获取弹窗的高度
+	
+## layuiadmin框架怎么使用app模块
+    
+    1.将app.js复制到lib\extends目录下
+    
+    2.修改config文件，在extends配置选项加上app
 
 
 ##  例子
