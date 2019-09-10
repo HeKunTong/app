@@ -1,0 +1,53 @@
+{
+  "code": 200,
+  "result": {
+    "total": 5,
+    "list": [{
+        "shopUserId": 11,
+        "shopId": 1,
+        "shopUserAccount": "ncl",
+        "shopUserName": "仙士可124",
+        "shopUserLastLoginTime": 1551768662,
+        "shopUserLastLoginIp": "192.168.199.114",
+        "shopUserIsUse": 1,
+        "shopUserAddTime": 1550736811
+    }, {
+        "shopUserId": 10,
+        "shopId": 1,
+        "shopUserAccount": "blank",
+        "shopUserName": "blank",
+        "shopUserLastLoginTime": 1550802180,
+        "shopUserLastLoginIp": "192.168.64.1",
+        "shopUserIsUse": 1,
+        "shopUserAddTime": 1550730811
+    }, {
+        "shopUserId": 3,
+        "shopId": 1,
+        "shopUserAccount": "kt",
+        "shopUserName": "blank",
+        "shopUserLastLoginTime": 1552289160,
+        "shopUserLastLoginIp": "127.0.0.1",
+        "shopUserIsUse": 1,
+        "shopUserAddTime": 1547540006
+    }, {
+        "shopUserId": 2,
+        "shopId": 1,
+        "shopUserAccount": "test2",
+        "shopUserName": "xsk",
+        "shopUserLastLoginTime": null,
+        "shopUserLastLoginIp": null,
+        "shopUserIsUse": 1,
+        "shopUserAddTime": 1547540006
+    }, {
+        "shopUserId": 1,
+        "shopId": 1,
+        "shopUserAccount": "test",
+        "shopUserName": "仙士可",
+        "shopUserLastLoginTime": 1551769533,
+        "shopUserLastLoginIp": "127.0.0.1",
+        "shopUserIsUse": 1,
+        "shopUserAddTime": 1551058455
+    }]
+  },
+  "msg": "success"
+}

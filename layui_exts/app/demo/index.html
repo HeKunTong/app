@@ -1,0 +1,204 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>curd快捷式开发 - layui 第三方扩展组件示例</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../layui/css/layui.css" media="all">
+</head>
+<body>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-body">
+      <div class="layui-form toolbar">
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-label w-auto">搜索：</label>
+            <div class="layui-input-inline mr0">
+              <input name="keyword" class="layui-input" type="text" placeholder="输入关键字"/>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <button class="layui-btn icon-btn" lay-filter="search" lay-submit>
+              <i class="layui-icon">&#xe615;</i>搜索
+            </button>
+            <button id="btnAddRole" class="layui-btn icon-btn" lay-submit="" lay-filter="add"><i class="layui-icon">&#xe654;</i>添加</button>
+          </div>
+        </div>
+      </div>
+
+      <table id="main-table" lay-filter="LAY-main-table"></table>
+    </div>
+  </div>
+</div>
+
+
+<!-- 页面加载loading -->
+<div class="page-loading">
+  <div class="ball-loader">
+    <span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+<style>
+
+  .layui-layedit {
+    min-width: 525px;
+  }
+
+  .layui-textarea {
+    resize: none;
+  }
+
+  .layui-laydate-content>.layui-laydate-list {
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+
+  .layui-laydate-content>.layui-laydate-list>li{
+    width: 50%;
+  }
+
+</style>
+
+<script type="text/html" id="toolBar">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+  <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="remove">修改</a>
+</script>
+
+<script src="../../../layui/layui.js"></script>
+<script src="./tools.js"></script>
+<script>
+    console.log(12);
+    layui.config({
+        base: '../../../layui_exts/' //配置 layui 第三方扩展组件存放的基础目录
+    }).extend({
+        'app': 'app/app'
+    }).use(['app'], function() {
+
+        let $ = layui.$;
+        let app = layui.app;
+        let controller = app.controller;
+        let model = app.model;
+        let field = app.field;
+        let toolbar = app.toolbar;
+        let formField = app.formField;
+        let config = app.config;
+        let fields = [
+            field.setKey('shopUserAccount').setTitle('帐号').clear(),
+            field.setKey('shopUserName').setTitle('名称').clear(),
+            field.setKey('shopUserAddTime').setTitle('添加时间').setTemplet(function(data) {
+                return intToDate(data.shopUserAddTime);
+            }).clear(),
+            field.setKey('shopUserIsUse').setTitle('状态').setTemplet(function(data) {
+                var str = '正常';
+                if (!data.shopUserIsUse) {
+                    str = '禁用';
+                }
+                return str;
+            }).clear(),
+            field.setKey('shopUserLastLoginTime').setTitle('最后一次登录时间').setTemplet(function(data) {
+                var str = '';
+                if (data.shopUserLastLoginTime) {
+                    str = intToDate(data.shopUserLastLoginTime);
+                }
+                return str;
+            }).clear(),
+            field.setKey('shopUserLastLoginIp').setTitle('最后一次登录Ip').clear(),
+            toolbar.setWidth(180).setToolbar('#toolBar').clear()
+        ];
+
+        let formFields = [
+            formField.text().setName('shopUserAccount').setTitle('帐号').setDisabled(true).exec(),
+            formField.text().setName('shopUserName').setTitle('名称').exec(),
+            formField.text().setName('phone').setTitle('手机号码').exec(),
+            formField.upload().setName('userAvatar').setTitle('头像').setUrl('/Api/Common/File/image').setCallBack(function(response) {
+                return response.result;
+            }).exec(),
+            formField.edit().setName('detail').setTitle('详情').setUrl('/Api/Common/File/image').setCallBack(function(response) {
+                return {src: response.result, title: response.result};
+            }).exec(),
+            formField.textarea().setName('info').setTitle('信息').exec(),
+            formField.radio().setName('color').setTitle('颜色').setData([{key: 0, text: '白色'}, {key: 1, text: '黑色'}]).setDefaultValue(0).exec(),
+            formField.switch().setName('status').setTitle('状态').setOpenText('正常').setCloseText('禁用').setDefaultValue(0).exec(),
+            formField.date().setName('now').setTitle('今天').setDefaultValue('2019-08-20').exec(),
+            formField.date().setName('time').setTitle('时间').setDateType('time').setFormat('HH:mm').setDefaultValue('14:00').exec(),
+            formField.select().setName('sex').setTitle('性别').setData([{key: 1, text: '男'}, {key: 2, text: '女'}]).setDefaultValue(1).exec(),
+            formField.select().setName('element').setTitle('控件').setSearch(true).setData([{
+                key: 1, text: 'layer'
+            }, {
+                key: 2, text: 'form'
+            }, {
+                key: 3, text: 'layim'
+            }, {
+                key: 4, text: 'element'
+            }, {
+                key: 5, text: 'laytpl'
+            }, {
+                key: 6, text: 'upload'
+            }, {
+                key: 7, text: 'laydate'
+            }, {
+                key: 8, text: 'laypage'
+            }, {
+                key: 9, text: 'flow'
+            }, {
+                key: 10, text: 'util'
+            }, {
+                key: 11, text: 'code'
+            }, {
+                key: 11, text: 'tree'
+            }]).setDefaultValue(1).exec(),
+            formField.checkbox().setName('exam').setTitle('考试').setData([{key: 0, text: '选择题'}, {key: 1, text: '填空题'}, {key: 2, text: '判断题'}, {key: 3, text: '应用题'}]).setDefaultValue(1).exec(),
+            formField.password().setName('userPassword').setTitle('密码').exec(),
+            formField.select().setName('state').setTitle('状态').setData([{key: 0, text: '禁用'}, {key: 1, text: '正常'}]).setDefaultValue(1).exec(),
+        ];
+
+        model.setField(fields);
+        model.setListUrl('../json/demo.json');
+        model.setId('shopUserId');
+
+        config.setHeight('700px');
+
+        controller.init(function() {
+            controller.setConfig(config).setModel(model).renderTable();
+            controller.search();
+
+            controller.setFormFields(formFields);
+
+            controller.addByPopup('用户', function (params) {
+                console.log(params);
+                return false;
+                // return params;
+            });
+
+            // 绑定表格工具栏事件
+            controller.onTable([{
+                event: 'edit',
+                callBack: function (data) {
+                    controller.updateByPopup('用户', data, function (params) {
+                        console.log(params);
+                        return false;
+                        // return params;
+                    });
+                }
+            }, {
+                event: 'remove',
+                callBack: function (data) {
+                    controller.remove(data);
+                }
+            }]);
+        });
+    });
+</script>
+
+</body>
+</html>
+
+

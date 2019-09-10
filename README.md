@@ -397,5 +397,26 @@
 </script>
 ```
 
-	
+温馨提示：table基础模块文件有做稍微调整，在180行左右加了以下东西：
 
+```
+// by blank
+let data = {};
+for (let i in n) {
+    let key = n[i];
+    if (typeof key !== 'undefined' && i !== 'statusCode' && typeof(key) === 'string') {
+        let keys = key.split('.');
+        let temp = t;
+        for (let pos = 0; pos < keys.length; pos++) {
+            temp = temp[keys[pos]];
+            if (typeof temp === "undefined") {
+                break;
+            }
+        }
+        data[key] = temp || null;
+    }
+}
+t = data;
+// end
+```	
+	
