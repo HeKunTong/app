@@ -6,7 +6,7 @@
 
 	核心函数:
 	
-	1. init 初始化admin, view, laydate, upload等模块，执行回调函数
+	1. init 初始化laydate, upload等模块，执行回调函数
 	
 	2. setModel 模型，包括id，列表url, 添加url，修改url，删除url，以及表格字段
 	
@@ -161,7 +161,7 @@
 	
 	10.getHeight 获取弹窗的高度
 	
-## layuiadmin框架怎么使用app模块
+## layuiadmin框架怎么使用app模块(单页版)
     
     1.将app.js复制到lib\extends目录下
     
@@ -178,14 +178,15 @@
      let form;
      let table;	
 
-    layui.use('app', function() {
+    layui.use(['app', 'admin', 'view'], function() {
         let $ = layui.$;
         $("#js-load-title").html('用户管理');//标题
         $("#js-load-Controller").html('用户管理');//控制器
         $("#js-load-action").html('用户列表');//方法
         $("#js-load-table-title").html('用户列表');//方法
         $("#keyword-placeholder").attr('placeholder', '帐号');//搜索框
-
+	admin = layui.admin;
+	view = layui.view;
         let app = layui.app;
         let controller = app.controller;
         let model = app.model;
@@ -308,8 +309,6 @@
         model.setId('userId');
 
         controller.init(function () {
-            admin = controller.getAdmin();
-            view = controller.getView();
             form = controller.getForm();
             table = controller.getTable();
             controller.setModel(model).renderTable();		// 设置model以及渲染table 
